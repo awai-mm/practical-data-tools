@@ -1,0 +1,14 @@
+title: "欠品と過剰在庫を同時に防ぐ発注点・安全在庫・ABC分析の実務ハンドブック"
+summary: "SKUごとの出庫実績と調達リードタイムから安全在庫・発注点・推奨発注数を自動算出し、売上貢献度によるABCランク分類と滞留在庫アラートを出力する実務ハンドブック＆計算機パック。"
+topics: ["python", "csv", "automation", "accounting", "business"]
+published: true
+price: 0
+chapters:
+  - ch01
+  - ch02
+  - ch03
+  - ch04
+  - ch05
+  - ch06
+  - ch07
+  - ch08

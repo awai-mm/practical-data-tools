@@ -1,0 +1,14 @@
+title: "黒字倒産を防ぐ資金繰り表・入金サイト・運転資金シミュレーション実務ハンドブック"
+summary: "損益計算書（PL）上の利益と実際の口座残高のズレを生む入金サイト・支払サイト・消費税や所得税の納税月を織り込み、資金ショート危険月を事前に検知する実務書＆計算機。"
+topics: ["python", "csv", "automation", "accounting", "business"]
+published: true
+price: 0
+chapters:
+  - ch01
+  - ch02
+  - ch03
+  - ch04
+  - ch05
+  - ch06
+  - ch07
+  - ch08

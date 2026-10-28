@@ -1,0 +1,14 @@
+title: "現場のCSV・売上・在庫・帳簿データを一発検品・クレンジングする実務ハンドブック"
+summary: "売上明細・在庫表・会計インポート用CSVに潜む『全角数字・カンマ混入金額・日付表記揺れ・重複キー・マイナス在庫・金額不一致』を3秒で検出し、クリーンな正規化CSVと検品レポートを出力するための実務解説書＆ブラウザ/CLIツールセット。"
+topics: ["python", "csv", "automation", "accounting", "business"]
+published: true
+price: 0
+chapters:
+  - ch01
+  - ch02
+  - ch03
+  - ch04
+  - ch05
+  - ch06
+  - ch07
+  - ch08

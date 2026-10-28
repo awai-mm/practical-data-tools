@@ -1,0 +1,14 @@
+title: "継続課金・リピート事業のLTV・解約率・ユニットエコノミクス実務ハンドブック"
+summary: "月次解約率（チャーンレート）のわずかな差が12ヶ月後のMRRとLTVに与える影響を正確に試算し、許容獲得単価（CAC）と投資回収月数を即座に判定する実務書＆計算機。"
+topics: ["python", "csv", "automation", "accounting", "business"]
+published: true
+price: 0
+chapters:
+  - ch01
+  - ch02
+  - ch03
+  - ch04
+  - ch05
+  - ch06
+  - ch07
+  - ch08

@@ -1,0 +1,14 @@
+title: "請求書・支払明細・消費税端数のズレを即座に見抜く経理検算ハンドブック"
+summary: "軽減税率8%と標準税率10%の混在、端数処理（切捨・四捨五入・切上）、源泉徴収税額（10.21% / 20.42%）、振込手数料差し引き後の入金消込ズレを一括検証する実務ハンドブック＆計算機パック。"
+topics: ["python", "csv", "automation", "accounting", "business"]
+published: true
+price: 0
+chapters:
+  - ch01
+  - ch02
+  - ch03
+  - ch04
+  - ch05
+  - ch06
+  - ch07
+  - ch08

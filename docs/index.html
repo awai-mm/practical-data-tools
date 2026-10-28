@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>実務データ検品・会計消込・数理最適化ツール＆実用書スイート | Awai Practical Data Tools</title>
+  <meta name="description" content="ブラウザ単体（外部送信ゼロ）とPython標準ライブラリCLIで即座に動く、経理・在庫・EC・監査データの自動検品・部分和消込・数理最適化ワークベンチ＆実用書カタログ。">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-strong: #0284c7;
+      --gold: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    header {
+      padding: 3.5rem 1.5rem 2.5rem;
+      text-align: center;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 1.25rem; }
+    h1 { font-size: 2rem; margin: 0 0 0.75rem; letter-spacing: 0.02em; }
+    .lead { color: var(--muted); max-width: 780px; margin: 0 auto 1.5rem; font-size: 1.02rem; }
+    .hero-cta { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    section { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    h2 { font-size: 1.45rem; margin: 0 0 0.5rem; color: var(--accent); }
+    .sec-lead { color: var(--muted); margin: 0 0 1.5rem; font-size: 0.95rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.25rem;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card.highlight { border-color: var(--accent); }
+    .badge-row { display: flex; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.65rem; flex-wrap: wrap; }
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: #334155;
+      color: #e2e8f0;
+    }
+    .badge.accent { background: #0369a1; color: #fff; }
+    .badge.price { background: rgba(245, 158, 11, 0.16); color: #fcd34d; }
+    .card h3 { font-size: 1.08rem; margin: 0 0 0.45rem; line-height: 1.4; }
+    .card .sub { font-size: 0.86rem; color: var(--accent); margin: 0 0 0.5rem; }
+    .card .desc { font-size: 0.88rem; color: var(--muted); margin: 0 0 1.1rem; flex-grow: 1; }
+    .btn-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.55rem 0.95rem;
+      border-radius: 8px;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn.primary { background: var(--accent-strong); color: #fff; }
+    .btn.secondary { background: #334155; color: #f8fafc; }
+    footer { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>実務データ検品・会計消込・数理最適化ツール＆実用書スイート</h1>
+      <p class="lead">
+        機密CSVを外部サーバーへ一切送信せず、ブラウザ内（ローカル完結）またはPython標準ライブラリCLIだけで即座に検品・変換・最適化できる実務ツール群と体系化ハンドブックの公式ストアフロントです。
+      </p>
+      <div class="hero-cta">
+        <a class="btn primary" href="calculators/index.html">5-in-1 経営・経理即答計算機を使う</a>
+        <a class="btn secondary" href="heavy/algo-01.html">N対M 部分和消込＆仕訳変換を試す</a>
+        <a class="btn secondary" href="heavy/algo-02.html">在庫発注点(s,S)・資金繰り最適化ソルバー</a>
+        <a class="btn secondary" href="https://github.com/awai-mm/practical-data-tools/releases" target="_blank" rel="noopener">GitHub Releases 一括ダウンロード</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="heavy-suite">
+      <h2>プロフェッショナル数理アルゴリズム・会計ソルバースイート</h2>
+      <p class="sec-lead">部分和問題の動的計画法やモンテカルロ確率計画法を、経理・在庫・監査の現場でそのまま使える単一HTML＆標準ライブラリCLIとして実装。</p>
+      <div class="grid">
+        
+            <article class="card highlight">
+              <div class="badge-row">
+                <span class="badge accent">ALGO-03</span>
+                <span class="badge price">プロフェッショナル数理スイート</span>
+              </div>
+              <h3>経営・経理・EC実務の即答計算機スイート（5-in-1 Webバンドル）</h3>
+              <p class="desc">インボイス端数逆算（8%/10%混在）・損益分岐点・キャッシュランウェイ・安全在庫発注点・ECモール実質粗利を1画面で即座に算出。</p>
+              <div class="btn-row">
+                
+                <a class="btn secondary" href="downloads/algo-03-seo-micro-calculators-bundle-direct-sales-bundle.zip" download>フルパッケージZIP</a>
+              </div>
+            </article>
+            
+            <article class="card highlight">
+              <div class="badge-row">
+                <span class="badge accent">ALGO-01</span>
+                <span class="badge price">プロフェッショナル数理スイート</span>
+              </div>
+              <h3>複数クレカ・銀行CSV・Amazon履歴のN対M部分和消込＆弥生/freee/MF仕訳変換エンジン</h3>
+              <p class="desc">合算引落・分割決済・インボイス番号照合を動的計画法＋枝刈り探索で自動特定し、主要3会計ソフトの複式仕訳CSVへ相互変換。</p>
+              <div class="btn-row">
+                
+                <a class="btn secondary" href="downloads/algo-01-subset-sum-journal-bridge-direct-sales-bundle.zip" download>フルパッケージZIP</a>
+              </div>
+            </article>
+            
+            <article class="card highlight">
+              <div class="badge-row">
+                <span class="badge accent">ALGO-02</span>
+                <span class="badge price">プロフェッショナル数理スイート</span>
+              </div>
+              <h3>モンテカルロ法・数理計画法による在庫発注点(s,S)・歩留まり・資金繰り同時最適化ソルバー</h3>
+              <p class="desc">需要変動・リードタイム不確実性・CVaR資金ショート制約を同時に満たす発注点(s,S)と安全在庫・運転資金を算出。</p>
+              <div class="btn-row">
+                
+                <a class="btn secondary" href="downloads/algo-02-stochastic-inventory-cashflow-solver-direct-sales-bundle.zip" download>フルパッケージZIP</a>
+              </div>
+            </article>
+            
+            <article class="card highlight">
+              <div class="badge-row">
+                <span class="badge accent">ALGO-04</span>
+                <span class="badge price">プロフェッショナル数理スイート</span>
+              </div>
+              <h3>非同期競合・通貨端数保存則・状態遷移バグの形式的不変条件プローバー</h3>
+              <p class="desc">決済・ポイント・台帳システムの丸め誤差や二重実行バグを数学的不変条件で検出・証明する検証スイート。</p>
+              <div class="btn-row">
+                
+                <a class="btn secondary" href="downloads/algo-04-oss-bounty-patch-prover-direct-sales-bundle.zip" download>フルパッケージZIP</a>
+              </div>
+            </article>
+            
+      </div>
+    </section>
+
+    <section id="domestic-catalog">
+      <h2>国内実務データ検品・自動化パッケージ全10巻（ブラウザ計算機 ＋ Python CLI ＋ 実用書）</h2>
+      <p class="sec-lead">全ツールとも外部通信ゼロでブラウザ上から即実行可能。Zenn Book版（<code>books/</code>）およびEPUB3電子書籍版と完全連動しています。</p>
+      <div class="grid">
+        
+            <article class="card">
+              <div class="badge-row">
+                <span class="badge">PKG-01</span>
+                <span class="badge price">実用書 ¥880 / ツールパック ¥1,980</span>
+              </div>
+              <h3>現場のCSV・売上・在庫・帳簿データを一発検品・クレンジングする実務ハンドブック</h3>
+              <p class="sub">手作業の手戻りをゼロにするデータ品質検査・表記揺れ正規化・集計自動化レシピ</p>
+              <p class="desc">売上明細・在庫表・会計インポート用CSVに潜む『全角数字・カンマ混入金額・日付表記揺れ・重複キー・マイナス在庫・金額不一致』を3秒で検出し、クリーンな正規化CSVと検品レポートを出力するための実務解説書＆ブラウザ/CLIツールセット。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="workbenches/pkg-01-csv-cleansing.html" target="_blank" rel="noopener">ブラウザ計算機・検品器を起動</a>
+                <a class="btn secondary" href="downloads/pkg-01-csv-cleansing-direct-pack-v1.zip" download>Python CLI＆サンプルZIP</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="badge-row">
+                <span class="badge">PKG-02</span>
+                <span class="badge price">実用書 ¥880 / ツールパック ¥1,980</span>
+              </div>
+              <h3>請求書・支払明細・消費税端数のズレを即座に見抜く経理検算ハンドブック</h3>
+              <p class="sub">8%・10%混在・源泉徴収・入金消込の手戻りを防ぐ実務チェックリストと自動検算レシピ</p>
+              <p class="desc">軽減税率8%と標準税率10%の混在、端数処理（切捨・四捨五入・切上）、源泉徴収税額（10.21% / 20.42%）、振込手数料差し引き後の入金消込ズレを一括検証する実務ハンドブック＆計算機パック。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="workbenches/pkg-02-invoice-tax-reconcile.html" target="_blank" rel="noopener">ブラウザ計算機・検品器を起動</a>
+                <a class="btn secondary" href="downloads/pkg-02-invoice-tax-reconcile-direct-pack-v1.zip" download>Python CLI＆サンプルZIP</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="badge-row">
+                <span class="badge">PKG-03</span>
+                <span class="badge price">実用書 ¥880 / ツールパック ¥1,980</span>
+              </div>
+              <h3>EC・デジタル直販の利益率を守る価格設計と損益分岐点ハンドブック</h3>
+              <p class="sub">決済手数料・モール手数料・送料・返品率を織り込んだ単品収支管理と価格シミュレーション</p>
+              <p class="desc">売上は伸びているのに手元に現金が残らない原因となる隠れコスト（決済手数料・送料負担・梱包資材・広告費・返品率）を可視化し、チャネル別の限界利益と損益分岐販売数を即座に算出する実用書＆計算機。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="workbenches/pkg-03-ec-margin-simulator.html" target="_blank" rel="noopener">ブラウザ計算機・検品器を起動</a>
+                <a class="btn secondary" href="downloads/pkg-03-ec-margin-simulator-direct-pack-v1.zip" download>Python CLI＆サンプルZIP</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="badge-row">
+                <span class="badge">PKG-04</span>
+                <span class="badge price">実用書 ¥880 / ツールパック ¥1,980</span>
+              </div>
+              <h3>小規模現場のシフト作成・労働時間集計・人件費コントロール実務ハンドブック</h3>
+              <p class="sub">法定休憩・上限時間・日次人件費率を同時に満たす勤怠データ検査とシフト編成レシピ</p>
+              <p class="desc">6時間超・8時間超の法定休憩漏れ、深夜割増・残業時間の計算ミス、売上予測に対する日次人件費率の超過をシフト確定前に一発検査する実務解説書＆ツールパック。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="workbenches/pkg-04-shift-labor-planner.html" target="_blank" rel="noopener">ブラウザ計算機・検品器を起動</a>
+                <a class="btn secondary" href="downloads/pkg-04-shift-labor-planner-direct-pack-v1.zip" download>Python CLI＆サンプルZIP</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="badge-row">
+                <span class="badge">PKG-05</span>
+                <span class="badge price">実用書 ¥880 / ツールパック ¥1,980</span>
+              </div>
+              <h3>欠品と過剰在庫を同時に防ぐ発注点・安全在庫・ABC分析の実務ハンドブック</h3>
+              <p class="sub">勘と経験の発注から脱却するリードタイム別在庫コントロールと自動計算レシピ</p>
+              <p class="desc">SKUごとの出庫実績と調達リードタイムから安全在庫・発注点・推奨発注数を自動算出し、売上貢献度によるABCランク分類と滞留在庫アラートを出力する実務ハンドブック＆計算機パック。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="workbenches/pkg-05-inventory-reorder-calc.html" target="_blank" rel="noopener">ブラウザ計算機・検品器を起動</a>
+                <a class="btn secondary" href="downloads/pkg-05-inventory-reorder-calc-direct-pack-v1.zip" download>Python CLI＆サンプルZIP</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="badge-row">
+                <span class="badge">PKG-06</span>
+                <span class="badge price">実用書 ¥880 / ツールパック ¥1,980</span>
+              </div>
+              <h3>継続課金・リピート事業のLTV・解約率・ユニットエコノミクス実務ハンドブック</h3>
+              <p class="sub">獲得単価と回収期間を見誤らないコホート収益分析とキャッシュフロー設計</p>
+              <p class="desc">月次解約率（チャーンレート）のわずかな差が12ヶ月後のMRRとLTVに与える影響を正確に試算し、許容獲得単価（CAC）と投資回収月数を即座に判定する実務書＆計算機。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="workbenches/pkg-06-subscription-ltv-churn.html" target="_blank" rel="noopener">ブラウザ計算機・検品器を起動</a>
+                <a class="btn secondary" href="downloads/pkg-06-subscription-ltv-churn-direct-pack-v1.zip" download>Python CLI＆サンプルZIP</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="badge-row">
+                <span class="badge">PKG-07</span>
+                <span class="badge price">実用書 ¥880 / ツールパック ¥1,980</span>
+              </div>
+              <h3>Web公開前の事故を防ぐHTML構造・OGP・メタタグ・表記揺れ検品ハンドブック</h3>
+              <p class="sub">外注納品物と自社LPを5分で監査する品質チェックリストと自動検査ツール</p>
+              <p class="desc">title・description文字数超過、OGP未設定、h1複数混入・見出し階層飛ばし、alt属性漏れ、ダミーURL（#やexample.com）残存を公開前に一括検出する実務書＆監査ツール。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="workbenches/pkg-07-html-seo-link-auditor.html" target="_blank" rel="noopener">ブラウザ計算機・検品器を起動</a>
+                <a class="btn secondary" href="downloads/pkg-07-html-seo-link-auditor-direct-pack-v1.zip" download>Python CLI＆サンプルZIP</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="badge-row">
+                <span class="badge">PKG-08</span>
+                <span class="badge price">実用書 ¥880 / ツールパック ¥1,980</span>
+              </div>
+              <h3>現場のログファイルから異常とボトルネックを即座に抽出する実務ハンドブック</h3>
+              <p class="sub">標準ツールだけで作る日次バッチ監視・エラー集計・レスポンス劣化検知レシピ</p>
+              <p class="desc">高価な監視SaaSを入れる前の小規模システムや業務バッチにおいて、エラー率急増・レイテンシ悪化・リトライ多発を数秒で要約・可視化する実務ハンドブック＆ツール。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="workbenches/pkg-08-log-error-digest.html" target="_blank" rel="noopener">ブラウザ計算機・検品器を起動</a>
+                <a class="btn secondary" href="downloads/pkg-08-log-error-digest-direct-pack-v1.zip" download>Python CLI＆サンプルZIP</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="badge-row">
+                <span class="badge">PKG-09</span>
+                <span class="badge price">実用書 ¥880 / ツールパック ¥1,980</span>
+              </div>
+              <h3>赤字案件を防ぐ工数見積・WBS分解・リスクバッファ設計の実務ハンドブック</h3>
+              <p class="sub">スコープ変更と手戻りに強い見積書作成・粗利率シミュレーションレシピ</p>
+              <p class="desc">実装工数だけで見積もってテスト・修正・進行管理費で赤字になるパターンを防ぎ、不確実性係数と目標粗利率から適正見積金額を算出する実務書＆計算機パック。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="workbenches/pkg-09-estimate-wbs-builder.html" target="_blank" rel="noopener">ブラウザ計算機・検品器を起動</a>
+                <a class="btn secondary" href="downloads/pkg-09-estimate-wbs-builder-direct-pack-v1.zip" download>Python CLI＆サンプルZIP</a>
+              </div>
+            </article>
+            
+            <article class="card">
+              <div class="badge-row">
+                <span class="badge">PKG-10</span>
+                <span class="badge price">実用書 ¥880 / ツールパック ¥1,980</span>
+              </div>
+              <h3>黒字倒産を防ぐ資金繰り表・入金サイト・運転資金シミュレーション実務ハンドブック</h3>
+              <p class="sub">12ヶ月先の現預金残高と納税資金を見通すキャッシュフロー管理と自動検算レシピ</p>
+              <p class="desc">損益計算書（PL）上の利益と実際の口座残高のズレを生む入金サイト・支払サイト・消費税や所得税の納税月を織り込み、資金ショート危険月を事前に検知する実務書＆計算機。</p>
+              <div class="btn-row">
+                <a class="btn primary" href="workbenches/pkg-10-cashflow-runway-planner.html" target="_blank" rel="noopener">ブラウザ計算機・検品器を起動</a>
+                <a class="btn secondary" href="downloads/pkg-10-cashflow-runway-planner-direct-pack-v1.zip" download>Python CLI＆サンプルZIP</a>
+              </div>
+            </article>
+            
+      </div>
+    </section>
+
+    <section id="global-en">
+      <h2>Global English Zero-Dependency Micro-Tools (12 Packs)</h2>
+      <p class="sec-lead">Offline browser workbenches and Python standard-library CLIs for CSV hygiene, invoice reconciliation, and financial operations.</p>
+      <div class="grid">
+        
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 01 Stripe Payout Reconciler</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-01-stripe-payout-reconciler.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-01-stripe-payout-reconciler-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 02 Saas Unit Economics Workbench</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-02-saas-unit-economics-workbench.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-02-saas-unit-economics-workbench-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 03 Api Contract Diff Auditor</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-03-api-contract-diff-auditor.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-03-api-contract-diff-auditor-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 04 Log Latency Burst Analyzer</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-04-log-latency-burst-analyzer.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-04-log-latency-burst-analyzer-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 05 Ecommerce Landed Cost Margin</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-05-ecommerce-landed-cost-margin.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-05-ecommerce-landed-cost-margin-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 06 Agency Scope Retainer Pricer</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-06-agency-scope-retainer-pricer.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-06-agency-scope-retainer-pricer-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 07 Sql Migration Preflight Kit</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-07-sql-migration-preflight-kit.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-07-sql-migration-preflight-kit-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 08 Cloud Cost Waste Auditor</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-08-cloud-cost-waste-auditor.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-08-cloud-cost-waste-auditor-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 09 Pii Redaction Compliance Kit</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-09-pii-redaction-compliance-kit.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-09-pii-redaction-compliance-kit-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 10 Technical Seo Crawl Auditor</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-10-technical-seo-crawl-auditor.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-10-technical-seo-crawl-auditor-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 11 Inventory Reorder Safety Stock</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-11-inventory-reorder-safety-stock.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-11-inventory-reorder-safety-stock-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+                <article class="card">
+                  <div class="badge-row">
+                    <span class="badge">GLOBAL EN</span>
+                    <span class="badge price">$19 Direct Pack</span>
+                  </div>
+                  <h3>En Pkg 12 Payroll Timesheet Overtime Auditor</h3>
+                  <div class="btn-row">
+                    <a class="btn primary" href="en/en-pkg-12-payroll-timesheet-overtime-auditor.html" target="_blank" rel="noopener">Launch Browser Workbench</a>
+                    <a class="btn secondary" href="downloads/en-pkg-12-payroll-timesheet-overtime-auditor-gumroad-pack-v1.zip" download>Download CLI + Toolpack ZIP</a>
+                  </div>
+                </article>
+                
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Awai Practical Engineering Suite — すべてのブラウザ計算機はクライアントサイド（ローカルメモリ内）で完結し、入力データを外部へ送信しません。</p>
+  </footer>
+</body>
+</html>

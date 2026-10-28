@@ -1,0 +1,14 @@
+title: "Web公開前の事故を防ぐHTML構造・OGP・メタタグ・表記揺れ検品ハンドブック"
+summary: "title・description文字数超過、OGP未設定、h1複数混入・見出し階層飛ばし、alt属性漏れ、ダミーURL（#やexample.com）残存を公開前に一括検出する実務書＆監査ツール。"
+topics: ["python", "csv", "automation", "accounting", "business"]
+published: true
+price: 0
+chapters:
+  - ch01
+  - ch02
+  - ch03
+  - ch04
+  - ch05
+  - ch06
+  - ch07
+  - ch08

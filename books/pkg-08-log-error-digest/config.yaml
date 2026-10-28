@@ -1,0 +1,14 @@
+title: "現場のログファイルから異常とボトルネックを即座に抽出する実務ハンドブック"
+summary: "高価な監視SaaSを入れる前の小規模システムや業務バッチにおいて、エラー率急増・レイテンシ悪化・リトライ多発を数秒で要約・可視化する実務ハンドブック＆ツール。"
+topics: ["python", "csv", "automation", "accounting", "business"]
+published: true
+price: 0
+chapters:
+  - ch01
+  - ch02
+  - ch03
+  - ch04
+  - ch05
+  - ch06
+  - ch07
+  - ch08

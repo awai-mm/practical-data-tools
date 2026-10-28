@@ -1,0 +1,14 @@
+title: "赤字案件を防ぐ工数見積・WBS分解・リスクバッファ設計の実務ハンドブック"
+summary: "実装工数だけで見積もってテスト・修正・進行管理費で赤字になるパターンを防ぎ、不確実性係数と目標粗利率から適正見積金額を算出する実務書＆計算機パック。"
+topics: ["python", "csv", "automation", "accounting", "business"]
+published: true
+price: 0
+chapters:
+  - ch01
+  - ch02
+  - ch03
+  - ch04
+  - ch05
+  - ch06
+  - ch07
+  - ch08

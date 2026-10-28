@@ -1,0 +1,14 @@
+title: "小規模現場のシフト作成・労働時間集計・人件費コントロール実務ハンドブック"
+summary: "6時間超・8時間超の法定休憩漏れ、深夜割増・残業時間の計算ミス、売上予測に対する日次人件費率の超過をシフト確定前に一発検査する実務解説書＆ツールパック。"
+topics: ["python", "csv", "automation", "accounting", "business"]
+published: true
+price: 0
+chapters:
+  - ch01
+  - ch02
+  - ch03
+  - ch04
+  - ch05
+  - ch06
+  - ch07
+  - ch08
