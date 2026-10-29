@@ -1,0 +1,29 @@
+{
+  "name": "@awai-mm/practical-data-tools-mcp",
+  "version": "1.2.0",
+  "description": "Zero-dependency MCP JSON-RPC 2.0 server for deterministic mathematical solvers, JSON/CSV repair, exact crypto/decimal math, subset-sum reconciliation, Monte Carlo inventory, and smart contract invariant auditing.",
+  "homepage": "https://awai-mm.github.io/practical-data-tools/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/awai-mm/practical-data-tools.git"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "agent-skills",
+    "llms-txt",
+    "a2a",
+    "l402",
+    "x402",
+    "subset-sum",
+    "monte-carlo",
+    "solidity-audit",
+    "csv-validator"
+  ],
+  "scripts": {
+    "start": "python3 mcp/mcp_server.py --stdio",
+    "test": "python3 mcp/test_mcp_and_b2a.py"
+  },
+  "license": "MIT"
+}

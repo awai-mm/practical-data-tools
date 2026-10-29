@@ -1,0 +1,30 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
+  "name": "io.github.awai-mm/practical-data-tools",
+  "description": "Zero-dependency deterministic solvers: JSON/CSV repair, exact crypto/decimal math, subset-sum reconciliation, Monte Carlo inventory, and Solidity invariant audit.",
+  "repository": {
+    "url": "https://github.com/awai-mm/practical-data-tools",
+    "source": "github"
+  },
+  "version_detail": {
+    "version": "1.2.0"
+  },
+  "packages": [
+    {
+      "registry_name": "pypi",
+      "name": "awai-practical-data-tools",
+      "version": "1.2.0",
+      "runtime_hint": "python3",
+      "runtime_arguments": [
+        {
+          "type": "positional",
+          "value": "mcp/mcp_server.py"
+        },
+        {
+          "type": "named",
+          "name": "--stdio"
+        }
+      ]
+    }
+  ]
+}

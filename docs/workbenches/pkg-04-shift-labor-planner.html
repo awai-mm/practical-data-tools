@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小規模現場のシフト作成・労働時間集計・人件費コントロール実務ハンドブック — ブラウザ完結型ワークベンチ</title>
+  <style>
+    :root {
+      --bg-main: #0f172a;
+      --bg-card: #1e293b;
+      --bg-input: #0b1120;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #2ecc9a;
+      --accent-hover: #25a87e;
+      --warn: #f59e0b;
+      --err: #ef4444;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+    }
+    .badge-line {
+      display: inline-block;
+      background: rgba(46, 204, 154, 0.15);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 22px;
+      margin: 4px 0 6px;
+      color: #ffffff;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin: 0 0 12px;
+    }
+    .cap-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .cap-badge {
+      background: #162032;
+      border: 1px solid var(--border);
+      color: #cbd5e1;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+    .grid-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 900px) {
+      .grid-top { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .card h2 {
+      font-size: 16px;
+      margin: 0 0 12px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
+    }
+    textarea {
+      width: 100%;
+      height: 210px;
+      background: var(--bg-input);
+      color: #e2e8f0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+      font-size: 12.5px;
+      resize: vertical;
+    }
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    button, .file-label {
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: #283548;
+      color: #f8fafc;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    button:hover, .file-label:hover {
+      background: #334155;
+    }
+    button.primary {
+      background: var(--accent);
+      color: #091526;
+      border-color: var(--accent);
+    }
+    button.primary:hover {
+      background: var(--accent-hover);
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 900px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .kpi-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .kpi-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .kpi-val {
+      font-size: 24px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    .kpi-val.ok { color: var(--accent); }
+    .kpi-val.warn { color: var(--warn); }
+    .kpi-val.err { color: var(--err); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background: #0f172a;
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+    .tag-err {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      border: 1px solid #ef4444;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .tag-warn {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fcd34d;
+      border: 1px solid #f59e0b;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .options-bar {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+    input[type="text"] {
+      background: var(--bg-input);
+      color: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 13px;
+      width: 150px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge-line">LOCAL BROWSER WORKBENCH — 外部通信ゼロ・オフライン完結</div>
+      <h1>小規模現場のシフト作成・労働時間集計・人件費コントロール実務ハンドブック</h1>
+      <p class="subtitle">法定休憩・上限時間・日次人件費率を同時に満たす勤怠データ検査とシフト編成レシピ</p>
+      <div class="cap-list"><span class="cap-badge">法定休憩時間（6h超45分・8h超60分）検査</span><span class="cap-badge">残業時間および概算人件費計算</span><span class="cap-badge">売上目標比の人件費率算出</span><span class="cap-badge">修正済み勤怠CSV出力</span></div>
+    </header>
+
+    <div class="kpi-grid">
+      <div class="kpi-box">
+        <div class="kpi-label">検査対象データ行数</div>
+        <div class="kpi-val" id="kpiTotalRows">0</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">正常行数 (Clean)</div>
+        <div class="kpi-val ok" id="kpiValidRows">0</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">要確認エラー (ERROR)</div>
+        <div class="kpi-val err" id="kpiErrorCount">0</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">表記揺れ自動整形 (WARN)</div>
+        <div class="kpi-val warn" id="kpiWarnCount">0</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">検算済み金額合計</div>
+        <div class="kpi-val ok" id="kpiTotalAmount">¥0</div>
+      </div>
+    </div>
+
+    <div class="grid-top">
+      <div class="card">
+        <h2>1. 入力データ（CSV / TSV）</h2>
+        <div class="options-bar">
+          <label>主キー列: <input type="text" id="keyColInput" value="shift_id" /></label>
+          <label><input type="checkbox" id="autoFixCheck" checked /> 自動クレンジング・金額再計算・不正行除外を適用</label>
+        </div>
+        <textarea id="rawCsvInput" placeholder="ここにCSVまたはTSVを貼り付けるか、下のボタンからサンプル・ファイルを読み込んでください"></textarea>
+        <div class="btn-row">
+          <button type="button" class="primary" id="btnRunInspect">検品・クレンジング実行</button>
+          <button type="button" id="btnLoadProblem">問題サンプル読込</button>
+          <button type="button" id="btnLoadClean">正常サンプル読込</button>
+          <label class="file-label">
+            ファイル選択
+            <input type="file" id="fileInput" accept=".csv,.tsv,.txt" style="display:none;" />
+          </label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2. クレンジング済み出力（正規化CSV）</h2>
+        <div class="options-bar">
+          <span>文字種・日付・カンマ・金額検算を反映したクリーンデータ</span>
+        </div>
+        <textarea id="cleanedCsvOutput" readonly placeholder="検品実行後に正規化済みCSVがここに出力されます"></textarea>
+        <div class="btn-row">
+          <button type="button" class="primary" id="btnDownloadCsv">クレンジング済みCSVを保存</button>
+          <button type="button" id="btnDownloadJson">検品レポートJSONを保存</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 20px;">
+      <h2>3. 検出された指摘事項一覧（行番号・原因・修正内容）</h2>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>行番号</th>
+              <th>主キーID</th>
+              <th>種別</th>
+              <th>コード</th>
+              <th>対象列</th>
+              <th>詳細メッセージ</th>
+            </tr>
+          </thead>
+          <tbody id="issuesTableBody">
+            <tr><td colspan="6" style="color:var(--text-muted);">データを読み込んで「検品・クレンジング実行」を押してください。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>4. カテゴリ別・全体集計サマリ</h2>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>カテゴリ / 集計区分</th>
+              <th>有効件数</th>
+              <th>数量合計</th>
+              <th>金額合計</th>
+            </tr>
+          </thead>
+          <tbody id="summaryTableBody">
+            <tr><td colspan="4" style="color:var(--text-muted);">集計結果がここに表示されます。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SAMPLE_PROBLEM_CSV = "shift_id,work_date,staff_id,staff_name,work_minutes,break_minutes,hourly_wage,daily_sales_target\nID-1001,2026-10-01,1000,サンプル項目_1,1000,1000,1000,1000\nID-1002,2026/10/02,\"¥2,000\", サンプル項目_2 ,\"¥2,000\",\"¥2,000\",\"¥2,000\",\"¥2,000\"\nID-1003,2026-10-03,3000,サンプル項目_3,3000,3000,3000,3000\nID-1001,2026-10-04,4000,サンプル項目_4,4000,4000,4000,4000\nID-1005,2026-10-05,5000,サンプル項目_5,5000,5000,5000,-500\n";
+    const SAMPLE_CLEAN_CSV = "shift_id,work_date,staff_id,staff_name,work_minutes,break_minutes,hourly_wage,daily_sales_target\nID-1001,2026-10-01,1000,サンプル項目_1,1000,1000,1000,1000\nID-1002,2026-10-02,2000,サンプル項目_2,2000,2000,2000,2000\nID-1003,2026-10-03,3000,サンプル項目_3,3000,3000,3000,3000\nID-1004,2026-10-04,4000,サンプル項目_4,4000,4000,4000,4000\nID-1005,2026-10-05,5000,サンプル項目_5,5000,5000,5000,5000\n";
+    const REQUIRED_COLUMNS = ["shift_id", "work_date", "staff_id", "staff_name", "work_minutes", "break_minutes", "hourly_wage", "daily_sales_target"];
+    let latestReport = null;
+
+    function toHalfWidth(str) {
+      return str.replace(/[！-～]/g, function(ch) {
+        return String.fromCharCode(ch.charCodeAt(0) - 0xFEE0);
+      }).replace(/　/g, " ");
+    }
+
+    function parseCsvLine(line, delimiter) {
+      const result = [];
+      let cur = "";
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          if (inQuotes && line[i + 1] === '"') {
+            cur += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === delimiter && !inQuotes) {
+          result.push(cur);
+          cur = "";
+        } else {
+          cur += ch;
+        }
+      }
+      result.push(cur);
+      return result;
+    }
+
+    function isNumericCol(col) {
+      const c = col.trim().toLowerCase();
+      const idCols = ["record_id", "invoice_id", "sku_id", "shift_id", "sku_code", "plan_id", "page_id", "endpoint_id", "task_id", "month_id", "sku", "staff_id"];
+      if (idCols.includes(c)) return false;
+      const kw = ["quantity", "unit_price", "amount", "stock", "subtotal", "tax", "withholding", "total", "paid", "price", "cost", "fee", "units", "minutes", "wage", "sales", "demand", "stddev", "lead_time", "moq", "users", "arpu", "margin", "churn", "cac", "length", "count", "requests", "latency", "hours", "multiplier", "rate", "cash", "inflow", "outflow"];
+      return kw.some(k => c.includes(k));
+    }
+
+    function isDateCol(col) {
+      const c = col.trim().toLowerCase();
+      return c.includes("date") || c === "month_id";
+    }
+
+    function normalizeDate(val) {
+      const v = val.trim();
+      const warns = [];
+      if (v.includes("/") || v.includes(".")) warns.push("W07_DATE_FORMAT_VARIATION");
+      const m = v.match(/^(\d{4})[\-/\.](\d{1,2})[\-/\.](\d{1,2})$/);
+      if (!m) return { iso: null, warns };
+      const y = parseInt(m[1], 10);
+      const mo = parseInt(m[2], 10);
+      const d = parseInt(m[3], 10);
+      const dtObj = new Date(Date.UTC(y, mo - 1, d));
+      if (dtObj.getUTCFullYear() !== y || dtObj.getUTCMonth() + 1 !== mo || dtObj.getUTCDate() !== d) {
+        return { iso: null, warns };
+      }
+      const iso = String(y).padStart(4, "0") + "-" + String(mo).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+      return { iso, warns };
+    }
+
+    function runInspection() {
+      const rawText = document.getElementById("rawCsvInput").value;
+      const keyCol = document.getElementById("keyColInput").value.trim() || "record_id";
+      const fixMode = document.getElementById("autoFixCheck").checked;
+      const lines = rawText.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n").filter(l => l.trim().length > 0);
+      if (lines.length === 0) return;
+
+      const delimiter = (lines[0].includes("\t") && !lines[0].includes(",")) ? "\t" : ",";
+      const headers = parseCsvLine(lines[0], delimiter).map(h => h.trim());
+      const issues = [];
+      const seenKeys = new Set();
+      const cleanedRows = [];
+      let validRows = 0;
+      let totalQuantity = 0;
+      let totalAmount = 0;
+      const byCategory = {};
+
+      REQUIRED_COLUMNS.forEach(req => {
+        if (!headers.includes(req.trim())) {
+          issues.push({ row: 1, id: "HEADER", severity: "ERROR", code: "E01_MISSING_REQUIRED_COLUMN", col: req, msg: "必須カラムが不足しています: " + req });
+        }
+      });
+
+      for (let i = 1; i < lines.length; i++) {
+        const rowNum = i + 1;
+        const cells = parseCsvLine(lines[i], delimiter);
+        const rowObj = {};
+        headers.forEach((h, idx) => { rowObj[h] = cells[idx] !== undefined ? cells[idx] : ""; });
+        let rowHasError = false;
+
+        headers.forEach(col => {
+          const orig = rowObj[col];
+          let v = orig;
+          if (v !== v.trim() || v.includes("　")) {
+            issues.push({ row: rowNum, id: rowObj[keyCol] || "", severity: "WARNING", code: "W04_WHITESPACE_PADDING", col, msg: "前後空白をトリムしました" });
+            v = v.replace(/　/g, " ").trim();
+          }
+          if (/[！-～]/.test(v)) {
+            issues.push({ row: rowNum, id: rowObj[keyCol] || "", severity: "WARNING", code: "W05_FULLWIDTH_NUMERIC", col, msg: "全角文字を半角へ正規化: " + orig });
+            v = toHalfWidth(v);
+          }
+          rowObj[col] = v;
+        });
+
+        const recId = (rowObj[keyCol] || "").trim();
+        let unrecoverable = false;
+        if (!recId) {
+          rowHasError = true;
+          unrecoverable = true;
+          issues.push({ row: rowNum, id: "(空欄)", severity: "ERROR", code: "E02_EMPTY_PRIMARY_KEY", col: keyCol, msg: "主キーが空欄です" });
+        } else if (seenKeys.has(recId)) {
+          rowHasError = true;
+          unrecoverable = true;
+          issues.push({ row: rowNum, id: recId, severity: "ERROR", code: "E03_DUPLICATE_PRIMARY_KEY", col: keyCol, msg: "主キーが重複しています: " + recId });
+        } else {
+          seenKeys.add(recId);
+        }
+
+        headers.forEach(col => {
+          if (isDateCol(col)) {
+            const dRes = normalizeDate(rowObj[col]);
+            dRes.warns.forEach(w => issues.push({ row: rowNum, id: recId, severity: "WARNING", code: w, col, msg: "日付表記をYYYY-MM-DDへ統一: " + rowObj[col] }));
+            if (!dRes.iso) {
+              rowHasError = true;
+              unrecoverable = true;
+              issues.push({ row: rowNum, id: recId, severity: "ERROR", code: "E08_INVALID_DATE_VALUE", col, msg: "不正な日付値です: " + rowObj[col] });
+            } else {
+              rowObj[col] = dRes.iso;
+            }
+          }
+        });
+
+        const numMap = {};
+        headers.forEach(col => {
+          if (isNumericCol(col)) {
+            const rawV = rowObj[col];
+            if (/[¥￥$円,%]/.test(rawV)) {
+              issues.push({ row: rowNum, id: recId, severity: "WARNING", code: "W06_CURRENCY_OR_COMMA", col, msg: "通貨記号・カンマを除去: " + rawV });
+            }
+            const cleaned = rawV.replace(/[¥￥$円,\s%]/g, "");
+            const num = Number(cleaned);
+            if (cleaned === "" || Number.isNaN(num)) {
+              rowHasError = true;
+              unrecoverable = true;
+              issues.push({ row: rowNum, id: recId, severity: "ERROR", code: "E09_NON_NUMERIC_VALUE", col, msg: "数値変換エラー: " + rawV });
+            } else {
+              rowObj[col] = String(num);
+              numMap[col] = num;
+              if (num < 0) {
+                rowHasError = true;
+                issues.push({ row: rowNum, id: recId, severity: "ERROR", code: "E11_NEGATIVE_VALUE", col, msg: "マイナス値検出: " + num });
+                if (fixMode) {
+                  numMap[col] = Math.abs(num);
+                  rowObj[col] = String(Math.abs(num));
+                }
+              }
+            }
+          }
+        });
+
+        if ("quantity" in numMap && "unit_price" in numMap && "amount" in numMap) {
+          const exp = numMap["quantity"] * numMap["unit_price"];
+          if (Math.abs(exp - numMap["amount"]) > 1e-6) {
+            rowHasError = true;
+            issues.push({ row: rowNum, id: recId, severity: "ERROR", code: "E10_AMOUNT_MISMATCH", col: "amount", msg: `金額不一致: ${numMap["quantity"]} * ${numMap["unit_price"]} = ${exp} (入力値: ${numMap["amount"]})` });
+            if (fixMode) {
+              numMap["amount"] = exp;
+              rowObj["amount"] = String(exp);
+            }
+          }
+        }
+
+        if (!rowHasError) validRows++;
+        if (!fixMode || !unrecoverable) {
+          cleanedRows.push(headers.map(h => rowObj[h]));
+          const q = numMap["quantity"] !== undefined ? numMap["quantity"] : 1;
+          const a = numMap["amount"] !== undefined ? numMap["amount"] : 0;
+          totalQuantity += q;
+          totalAmount += a;
+          const cat = rowObj["category"] || "標準集計";
+          if (!byCategory[cat]) byCategory[cat] = { rows: 0, quantity: 0, amount: 0 };
+          byCategory[cat].rows += 1;
+          byCategory[cat].quantity += q;
+          byCategory[cat].amount += a;
+        }
+      }
+
+      const errCount = issues.filter(x => x.severity === "ERROR").length;
+      const warnCount = issues.filter(x => x.severity === "WARNING").length;
+
+      document.getElementById("kpiTotalRows").textContent = String(lines.length - 1);
+      document.getElementById("kpiValidRows").textContent = String(validRows);
+      document.getElementById("kpiErrorCount").textContent = String(errCount);
+      document.getElementById("kpiWarnCount").textContent = String(warnCount);
+      document.getElementById("kpiTotalAmount").textContent = "¥" + totalAmount.toLocaleString();
+
+      const outCsvLines = [headers.join(",")].concat(cleanedRows.map(r => r.join(",")));
+      document.getElementById("cleanedCsvOutput").value = outCsvLines.join("\n");
+
+      const tbody = document.getElementById("issuesTableBody");
+      if (issues.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="color:var(--accent);">指摘事項はありません。すべての行が基準を満たしています。</td></tr>';
+      } else {
+        tbody.innerHTML = issues.map(iss => `
+          <tr>
+            <td>${iss.row}</td>
+            <td><code>${iss.id}</code></td>
+            <td><span class="${iss.severity === 'ERROR' ? 'tag-err' : 'tag-warn'}">${iss.severity}</span></td>
+            <td><code>${iss.code}</code></td>
+            <td><code>${iss.col}</code></td>
+            <td>${iss.msg}</td>
+          </tr>
+        `).join("");
+      }
+
+      const sumBody = document.getElementById("summaryTableBody");
+      const cats = Object.keys(byCategory);
+      sumBody.innerHTML = cats.map(c => `
+        <tr>
+          <td><strong>${c}</strong></td>
+          <td>${byCategory[c].rows} 件</td>
+          <td>${byCategory[c].quantity.toLocaleString()}</td>
+          <td>¥${byCategory[c].amount.toLocaleString()}</td>
+        </tr>
+      `).join("");
+
+      latestReport = {
+        ok: errCount === 0,
+        total_rows: lines.length - 1,
+        valid_rows: validRows,
+        error_count: errCount,
+        warning_count: warnCount,
+        total_amount: totalAmount,
+        issues
+      };
+    }
+
+    document.getElementById("btnLoadProblem").addEventListener("click", () => {
+      document.getElementById("rawCsvInput").value = SAMPLE_PROBLEM_CSV;
+      runInspection();
+    });
+    document.getElementById("btnLoadClean").addEventListener("click", () => {
+      document.getElementById("rawCsvInput").value = SAMPLE_CLEAN_CSV;
+      runInspection();
+    });
+    document.getElementById("btnRunInspect").addEventListener("click", runInspection);
+    document.getElementById("fileInput").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        document.getElementById("rawCsvInput").value = String(ev.target.result || "");
+        runInspection();
+      };
+      reader.readAsText(file, "UTF-8");
+    });
+    document.getElementById("btnDownloadCsv").addEventListener("click", () => {
+      const csvVal = document.getElementById("cleanedCsvOutput").value;
+      if (!csvVal) return;
+      const blob = new Blob([csvVal], { type: "text/csv;charset=utf-8;" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "cleaned_output.csv";
+      a.click();
+    });
+    document.getElementById("btnDownloadJson").addEventListener("click", () => {
+      if (!latestReport) return;
+      const blob = new Blob([JSON.stringify(latestReport, null, 2)], { type: "application/json;charset=utf-8;" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "inspection_report.json";
+      a.click();
+    });
+
+    // Initial load with problem sample so user sees immediate action
+    document.getElementById("rawCsvInput").value = SAMPLE_PROBLEM_CSV;
+    runInspection();
+  </script>
+</body>
+</html>

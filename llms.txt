@@ -1,0 +1,40 @@
+# Awai Practical Data Tools — Deterministic Solvers, Formal Invariant Checkers & MCP Server
+
+> Zero-dependency deterministic mathematical solvers, malformed JSON/CSV repair utilities, N-to-M subset-sum accounting reconciliation, Monte Carlo (s, S) inventory & CVaR cashflow optimization, and Solidity/Rust smart contract formal invariant verification. Available via MCP JSON-RPC 2.0 (`mcp/mcp_server.py`), OpenAPI 3.1 (`openapi.json`), A2A Agent Card (`.well-known/agent.json`), and HTTP 402 (`L402` Lightning / `x402` USDC) machine-to-machine settlement.
+
+## Agent & MCP Discovery Endpoints
+
+- [SKILL.md](https://awai-mm.github.io/practical-data-tools/SKILL.md): One-line MCP server setup (`mcp/mcp_server.py --stdio`), CLI invocation, and HTTP 402 payment protocol guide.
+- [A2A Agent Card](https://awai-mm.github.io/practical-data-tools/.well-known/agent.json): Agent-to-Agent capability manifest, tool schemas, and L402/x402 settlement specification.
+- [OpenAPI 3.1 Schema](https://awai-mm.github.io/practical-data-tools/openapi.json): Machine-readable input/output JSON schemas for all 6 deterministic tools.
+- [Full Technical Index (llms-full.txt)](https://awai-mm.github.io/practical-data-tools/llms-full.txt): Complete specification of all MCP tools, mathematical formulations, and 26 downloadable toolpacks.
+- [Unified MCP Server (mcp_server.py)](https://awai-mm.github.io/practical-data-tools/mcp/mcp_server.py): Pure Python 3 standard-library MCP JSON-RPC 2.0 server (`initialize`, `tools/list`, `tools/call`).
+- [HTTP 402 Payment Gate (b2a_payment_gate.py)](https://awai-mm.github.io/practical-data-tools/mcp/b2a_payment_gate.py): L402 (Lightning Macaroon+Preimage) and x402 (Base USDC) micropayment gate.
+
+## Unified MCP Tools (`mcp/mcp_server.py`)
+
+1. `repair_and_validate_structured_data` (**100% Free Hook Tool**): Repairs malformed/truncated JSON payloads (code fences, trailing commas, single quotes, unclosed brackets) and validates required keys.
+2. `exact_decimal_and_crypto_unit_math` (**100% Free Hook Tool**): 50-digit exact Decimal & integer unit math for Web3 (`wei`/`gwei`/`eth`/`usdc`), Lightning (`msat`/`sat`/`btc`), zero-dust pro-rata allocation (Largest Remainder Method), and basis-point (`bps`) fee splits.
+3. `subset_sum_reconcile` (Free trial <= 25 items; HTTP 402 L402/x402 for bulk batches): N-to-M subset-sum bank/card/invoice reconciliation with fee tolerance, JCT `T+13 digits` verification, and Yayoi/freee/MF journal export.
+4. `stochastic_inventory_cashflow_solve` (Free trial <= 500 paths; HTTP 402 for deep Monte Carlo): Seeded Monte Carlo `(s, S)` reorder point, safety stock, yield loss, and 95% CVaR working-capital solver.
+5. `audit_smart_contract_invariants` (Free trial <= 250 lines; HTTP 402 for deep audit): Static formal invariant analyzer for Solidity/Rust covering ERC4626 inflation, rounding drain, CEI/read-only reentrancy, and oracle/downcast bugs.
+6. `inspect_csv_integrity` (Free trial <= 200 rows; HTTP 402 for bulk CSV): Deterministic CSV schema, `U+FFFD` encoding garble, duplicate primary key, and 8%/10% consumption tax rounding verifier.
+
+## Heavy Algorithmic Web Workbenches
+
+- [5-in-1 Financial & Operations Calculators](https://awai-mm.github.io/practical-data-tools/calculators/index.html)
+- [ALGO-01 N-to-M Subset-Sum & Journal Bridge](https://awai-mm.github.io/practical-data-tools/heavy/algo-01.html)
+- [ALGO-02 Stochastic Inventory (s, S) & CVaR Cashflow Solver](https://awai-mm.github.io/practical-data-tools/heavy/algo-02.html)
+
+## Practical Data Hygiene & Automation Packages (10 Domestic Packs)
+
+- [現場のCSV・売上・在庫・帳簿データを一発検品・クレンジングする実務ハンドブック](https://awai-mm.github.io/practical-data-tools/workbenches/pkg-01-csv-cleansing.html): 売上明細・在庫表・会計インポート用CSVに潜む『全角数字・カンマ混入金額・日付表記揺れ・重複キー・マイナス在庫・金額不一致』を3秒で検出し、クリーンな正規化CSVと検品レポートを出力するための実務解説書＆ブラウザ/CLIツールセット。 (CLI ZIP: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-01-csv-cleansing-direct-pack-v1.zip`, EPUB3: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-01-csv-cleansing-handbook-v1.epub`)
+- [請求書・支払明細・消費税端数のズレを即座に見抜く経理検算ハンドブック](https://awai-mm.github.io/practical-data-tools/workbenches/pkg-02-invoice-tax-reconcile.html): 軽減税率8%と標準税率10%の混在、端数処理（切捨・四捨五入・切上）、源泉徴収税額（10.21% / 20.42%）、振込手数料差し引き後の入金消込ズレを一括検証する実務ハンドブック＆計算機パック。 (CLI ZIP: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-02-invoice-tax-reconcile-direct-pack-v1.zip`, EPUB3: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-02-invoice-tax-reconcile-handbook-v1.epub`)
+- [EC・デジタル直販の利益率を守る価格設計と損益分岐点ハンドブック](https://awai-mm.github.io/practical-data-tools/workbenches/pkg-03-ec-margin-simulator.html): 売上は伸びているのに手元に現金が残らない原因となる隠れコスト（決済手数料・送料負担・梱包資材・広告費・返品率）を可視化し、チャネル別の限界利益と損益分岐販売数を即座に算出する実用書＆計算機。 (CLI ZIP: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-03-ec-margin-simulator-direct-pack-v1.zip`, EPUB3: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-03-ec-margin-simulator-handbook-v1.epub`)
+- [小規模現場のシフト作成・労働時間集計・人件費コントロール実務ハンドブック](https://awai-mm.github.io/practical-data-tools/workbenches/pkg-04-shift-labor-planner.html): 6時間超・8時間超の法定休憩漏れ、深夜割増・残業時間の計算ミス、売上予測に対する日次人件費率の超過をシフト確定前に一発検査する実務解説書＆ツールパック。 (CLI ZIP: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-04-shift-labor-planner-direct-pack-v1.zip`, EPUB3: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-04-shift-labor-planner-handbook-v1.epub`)
+- [欠品と過剰在庫を同時に防ぐ発注点・安全在庫・ABC分析の実務ハンドブック](https://awai-mm.github.io/practical-data-tools/workbenches/pkg-05-inventory-reorder-calc.html): SKUごとの出庫実績と調達リードタイムから安全在庫・発注点・推奨発注数を自動算出し、売上貢献度によるABCランク分類と滞留在庫アラートを出力する実務ハンドブック＆計算機パック。 (CLI ZIP: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-05-inventory-reorder-calc-direct-pack-v1.zip`, EPUB3: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-05-inventory-reorder-calc-handbook-v1.epub`)
+- [継続課金・リピート事業のLTV・解約率・ユニットエコノミクス実務ハンドブック](https://awai-mm.github.io/practical-data-tools/workbenches/pkg-06-subscription-ltv-churn.html): 月次解約率（チャーンレート）のわずかな差が12ヶ月後のMRRとLTVに与える影響を正確に試算し、許容獲得単価（CAC）と投資回収月数を即座に判定する実務書＆計算機。 (CLI ZIP: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-06-subscription-ltv-churn-direct-pack-v1.zip`, EPUB3: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-06-subscription-ltv-churn-handbook-v1.epub`)
+- [Web公開前の事故を防ぐHTML構造・OGP・メタタグ・表記揺れ検品ハンドブック](https://awai-mm.github.io/practical-data-tools/workbenches/pkg-07-html-seo-link-auditor.html): title・description文字数超過、OGP未設定、h1複数混入・見出し階層飛ばし、alt属性漏れ、ダミーURL（#やexample.com）残存を公開前に一括検出する実務書＆監査ツール。 (CLI ZIP: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-07-html-seo-link-auditor-direct-pack-v1.zip`, EPUB3: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-07-html-seo-link-auditor-handbook-v1.epub`)
+- [現場のログファイルから異常とボトルネックを即座に抽出する実務ハンドブック](https://awai-mm.github.io/practical-data-tools/workbenches/pkg-08-log-error-digest.html): 高価な監視SaaSを入れる前の小規模システムや業務バッチにおいて、エラー率急増・レイテンシ悪化・リトライ多発を数秒で要約・可視化する実務ハンドブック＆ツール。 (CLI ZIP: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-08-log-error-digest-direct-pack-v1.zip`, EPUB3: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-08-log-error-digest-handbook-v1.epub`)
+- [赤字案件を防ぐ工数見積・WBS分解・リスクバッファ設計の実務ハンドブック](https://awai-mm.github.io/practical-data-tools/workbenches/pkg-09-estimate-wbs-builder.html): 実装工数だけで見積もってテスト・修正・進行管理費で赤字になるパターンを防ぎ、不確実性係数と目標粗利率から適正見積金額を算出する実務書＆計算機パック。 (CLI ZIP: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-09-estimate-wbs-builder-direct-pack-v1.zip`, EPUB3: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-09-estimate-wbs-builder-handbook-v1.epub`)
+- [黒字倒産を防ぐ資金繰り表・入金サイト・運転資金シミュレーション実務ハンドブック](https://awai-mm.github.io/practical-data-tools/workbenches/pkg-10-cashflow-runway-planner.html): 損益計算書（PL）上の利益と実際の口座残高のズレを生む入金サイト・支払サイト・消費税や所得税の納税月を織り込み、資金ショート危険月を事前に検知する実務書＆計算機。 (CLI ZIP: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-10-cashflow-runway-planner-direct-pack-v1.zip`, EPUB3: `https://awai-mm.github.io/practical-data-tools/downloads/pkg-10-cashflow-runway-planner-handbook-v1.epub`)

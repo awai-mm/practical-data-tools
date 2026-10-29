@@ -1,0 +1,541 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Awai Practical Data Tools — B2A Deterministic Solvers & Formal Invariant API",
+    "version": "1.2.0",
+    "description": "Machine-readable schema for the 6 deterministic MCP tools (`mcp/mcp_server.py`) and HTTP 402 (`L402` Lightning / `x402` Base USDC) micropayment gate (`mcp/b2a_payment_gate.py`)."
+  },
+  "servers": [
+    {
+      "url": "https://awai-mm.github.io/practical-data-tools",
+      "description": "GitHub Pages Static Discovery & Workbench Hub"
+    }
+  ],
+  "paths": {
+    "/tools/repair_and_validate_structured_data": {
+      "post": {
+        "operationId": "repair_and_validate_structured_data",
+        "summary": "[100% FREE HOOK TOOL] Repairs malformed or truncated JSON/dict payloads (strips markdown fences, removes trailing commas, converts single-quoted dicts, balances unclosed brackets/braces) and validates required schema keys.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "raw_text": {
+                    "type": "string",
+                    "description": "Raw, potentially malformed or truncated JSON/dict string."
+                  },
+                  "required_keys": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Optional list of required top-level keys to verify."
+                  }
+                },
+                "required": [
+                  "raw_text"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Deterministic solver execution result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "solver": {
+                      "type": "string",
+                      "const": "repair_and_validate_structured_data"
+                    },
+                    "b2a_gate": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "HTTP 402 Payment Required — Free trial quota exceeded; contains L402 Lightning and x402 USDC challenge payloads.",
+            "headers": {
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "L402 macaroon=\"...\", invoice=\"lnbc...\""
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/exact_decimal_and_crypto_unit_math": {
+      "post": {
+        "operationId": "exact_decimal_and_crypto_unit_math",
+        "summary": "[100% FREE HOOK TOOL] Exact 50-digit Decimal & integer arithmetic for Web3 units (Wei/Gwei/ETH/USDC), Lightning units (msat/sat/BTC), zero-dust pro-rata allocation (Largest Remainder Method), and basis-point (bps) fee splits without floating-point rounding drift.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "pro_rata_allocate",
+                      "convert_units",
+                      "bps_fee_split"
+                    ],
+                    "default": "pro_rata_allocate"
+                  },
+                  "total_amount": {
+                    "type": [
+                      "integer",
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "weights": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  },
+                  "value": {
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "from_unit": {
+                    "type": "string"
+                  },
+                  "to_unit": {
+                    "type": "string"
+                  },
+                  "fee_bps": {
+                    "type": [
+                      "integer",
+                      "number",
+                      "string"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Deterministic solver execution result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "solver": {
+                      "type": "string",
+                      "const": "exact_decimal_and_crypto_unit_math"
+                    },
+                    "b2a_gate": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "HTTP 402 Payment Required — Free trial quota exceeded; contains L402 Lightning and x402 USDC challenge payloads.",
+            "headers": {
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "L402 macaroon=\"...\", invoice=\"lnbc...\""
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/subset_sum_reconcile": {
+      "post": {
+        "operationId": "subset_sum_reconcile",
+        "summary": "Deterministic N-to-M subset-sum bank/card/invoice reconciliation solver with fee tolerance, Japanese Qualified Invoice (T+13 digits) validation, and Yayoi/freee/MoneyForward journal export. Free tier up to 25 items; larger batches support HTTP 402 (L402 Lightning / x402 USDC) unlock.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "targets": {
+                    "type": "array",
+                    "description": "Bank deposits or aggregated credit card withdrawals to reconcile.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "amount": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "amount"
+                      ]
+                    }
+                  },
+                  "candidates": {
+                    "type": "array",
+                    "description": "Individual invoices, orders, or receipts to match against targets.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "amount": {
+                          "type": "integer"
+                        },
+                        "invoice_no": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "amount"
+                      ]
+                    }
+                  },
+                  "fee_tolerance_jpy": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Maximum allowed bank transfer / gateway fee difference."
+                  },
+                  "journal_format": {
+                    "type": "string",
+                    "enum": [
+                      "freee",
+                      "yayoi",
+                      "mf",
+                      "en"
+                    ],
+                    "default": "freee"
+                  },
+                  "payment_proof": {
+                    "type": "string",
+                    "description": "Optional L402 ('L402 <macaroon>:<preimage>') or x402 ('x402 <cid>:<receipt>') proof for large batches."
+                  }
+                },
+                "required": [
+                  "targets",
+                  "candidates"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Deterministic solver execution result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "solver": {
+                      "type": "string",
+                      "const": "subset_sum_reconcile"
+                    },
+                    "b2a_gate": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "HTTP 402 Payment Required — Free trial quota exceeded; contains L402 Lightning and x402 USDC challenge payloads.",
+            "headers": {
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "L402 macaroon=\"...\", invoice=\"lnbc...\""
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/stochastic_inventory_cashflow_solve": {
+      "post": {
+        "operationId": "stochastic_inventory_cashflow_solve",
+        "summary": "Monte Carlo stochastic dynamic programming solver that computes the optimal (s, S) reorder policy, safety stock, yield loss buffer, and 95% CVaR working-capital requirement.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mean_daily_demand": {
+                    "type": "number",
+                    "default": 40.0
+                  },
+                  "std_daily_demand": {
+                    "type": "number",
+                    "default": 12.0
+                  },
+                  "lead_time_days": {
+                    "type": "integer",
+                    "default": 7
+                  },
+                  "unit_cost": {
+                    "type": "number",
+                    "default": 1000.0
+                  },
+                  "unit_price": {
+                    "type": "number",
+                    "default": 1650.0
+                  },
+                  "holding_cost_per_day": {
+                    "type": "number",
+                    "default": 8.0
+                  },
+                  "stockout_penalty": {
+                    "type": "number",
+                    "default": 450.0
+                  },
+                  "yield_rate": {
+                    "type": "number",
+                    "default": 0.96
+                  },
+                  "horizon_days": {
+                    "type": "integer",
+                    "default": 60
+                  },
+                  "num_paths": {
+                    "type": "integer",
+                    "default": 200
+                  },
+                  "seed": {
+                    "type": "integer",
+                    "default": 20261029
+                  },
+                  "payment_proof": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Deterministic solver execution result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "solver": {
+                      "type": "string",
+                      "const": "stochastic_inventory_cashflow_solve"
+                    },
+                    "b2a_gate": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "HTTP 402 Payment Required — Free trial quota exceeded; contains L402 Lightning and x402 USDC challenge payloads.",
+            "headers": {
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "L402 macaroon=\"...\", invoice=\"lnbc...\""
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/audit_smart_contract_invariants": {
+      "post": {
+        "operationId": "audit_smart_contract_invariants",
+        "summary": "Formal invariant and static vulnerability checker for Solidity/Rust smart contracts covering ERC4626 share inflation, floor/ceil rounding drain, CEI/read-only reentrancy, and oracle/downcast bugs.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source_code": {
+                    "type": "string",
+                    "description": "Solidity or Rust smart contract source code."
+                  },
+                  "contract_name": {
+                    "type": "string",
+                    "default": "TargetContract.sol"
+                  },
+                  "deep_audit": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "payment_proof": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source_code"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Deterministic solver execution result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "solver": {
+                      "type": "string",
+                      "const": "audit_smart_contract_invariants"
+                    },
+                    "b2a_gate": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "HTTP 402 Payment Required — Free trial quota exceeded; contains L402 Lightning and x402 USDC challenge payloads.",
+            "headers": {
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "L402 macaroon=\"...\", invoice=\"lnbc...\""
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/inspect_csv_integrity": {
+      "post": {
+        "operationId": "inspect_csv_integrity",
+        "summary": "Deterministic CSV schema, Shift_JIS/UTF-8 garble detection, primary-key uniqueness, and Japanese 8%/10% consumption tax rounding inspector.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "csv_text": {
+                    "type": "string",
+                    "description": "Raw CSV content to inspect."
+                  },
+                  "required_columns": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "key_column": {
+                    "type": "string"
+                  },
+                  "deep_scan": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "payment_proof": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "csv_text"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Deterministic solver execution result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "solver": {
+                      "type": "string",
+                      "const": "inspect_csv_integrity"
+                    },
+                    "b2a_gate": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "HTTP 402 Payment Required — Free trial quota exceeded; contains L402 Lightning and x402 USDC challenge payloads.",
+            "headers": {
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "L402 macaroon=\"...\", invoice=\"lnbc...\""
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
