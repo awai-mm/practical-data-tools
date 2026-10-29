@@ -1,0 +1,18 @@
+{
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "maintainers": [
+    "awai-mm"
+  ],
+  "name": "awai-practical-data-tools-mcp",
+  "description": "Deterministic mathematical solvers, malformed data repair, exact decimal/crypto unit math, N-to-M subset-sum reconciliation, Monte Carlo (s,S) inventory optimizer, and Solidity formal invariant checker.",
+  "license": "MIT",
+  "entrypoints": {
+    "stdio": {
+      "command": "python3",
+      "args": [
+        "mcp/mcp_server.py",
+        "--stdio"
+      ]
+    }
+  }
+}

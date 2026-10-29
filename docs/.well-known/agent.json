@@ -1,0 +1,322 @@
+{
+  "schema_version": "a2a-1.0",
+  "name": "awai-practical-data-tools",
+  "title": "Awai Practical Data Tools — Deterministic Mathematical Solvers & Formal Invariant Verification Agent",
+  "description": "Zero-dependency deterministic solvers for malformed JSON/CSV repair, exact 50-digit crypto/decimal unit math, N-to-M subset-sum accounting reconciliation, Monte Carlo (s, S) inventory & CVaR working-capital optimization, and Solidity/Rust smart contract formal invariant verification.",
+  "url": "https://awai-mm.github.io/practical-data-tools/",
+  "repository": "https://github.com/awai-mm/practical-data-tools",
+  "documentation_url": "https://awai-mm.github.io/practical-data-tools/SKILL.md",
+  "llms_txt_url": "https://awai-mm.github.io/practical-data-tools/llms.txt",
+  "llms_full_txt_url": "https://awai-mm.github.io/practical-data-tools/llms-full.txt",
+  "openapi_url": "https://awai-mm.github.io/practical-data-tools/openapi.json",
+  "protocols": [
+    {
+      "protocol": "mcp",
+      "version": "2024-11-05",
+      "transport": "stdio",
+      "command": "python3",
+      "args": [
+        "mcp/mcp_server.py",
+        "--stdio"
+      ],
+      "source_url": "https://awai-mm.github.io/practical-data-tools/mcp/mcp_server.py"
+    },
+    {
+      "protocol": "cli-jsonrpc",
+      "command": "python3",
+      "args": [
+        "mcp/mcp_server.py",
+        "--rpc-json"
+      ]
+    }
+  ],
+  "authentication": {
+    "free_tier": "none (zero-auth instant execution for hook tools and trial quotas)",
+    "paid_tier": "HTTP 402 Payment Required (L402 Lightning Macaroon+Preimage or x402 Base Mainnet USDC)",
+    "pre_kyc_required": false
+  },
+  "payment_gate": {
+    "protocols_supported": [
+      "L402",
+      "x402"
+    ],
+    "l402_network": "bitcoin-lightning",
+    "x402_network": "base-mainnet (chainId 8453, USDC 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913)",
+    "gate_module_url": "https://awai-mm.github.io/practical-data-tools/mcp/b2a_payment_gate.py"
+  },
+  "skills": [
+    {
+      "id": "repair_and_validate_structured_data",
+      "name": "repair_and_validate_structured_data",
+      "description": "[100% FREE HOOK TOOL] Repairs malformed or truncated JSON/dict payloads (strips markdown fences, removes trailing commas, converts single-quoted dicts, balances unclosed brackets/braces) and validates required schema keys.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "raw_text": {
+            "type": "string",
+            "description": "Raw, potentially malformed or truncated JSON/dict string."
+          },
+          "required_keys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional list of required top-level keys to verify."
+          }
+        },
+        "required": [
+          "raw_text"
+        ]
+      },
+      "free_hook": true
+    },
+    {
+      "id": "exact_decimal_and_crypto_unit_math",
+      "name": "exact_decimal_and_crypto_unit_math",
+      "description": "[100% FREE HOOK TOOL] Exact 50-digit Decimal & integer arithmetic for Web3 units (Wei/Gwei/ETH/USDC), Lightning units (msat/sat/BTC), zero-dust pro-rata allocation (Largest Remainder Method), and basis-point (bps) fee splits without floating-point rounding drift.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "pro_rata_allocate",
+              "convert_units",
+              "bps_fee_split"
+            ],
+            "default": "pro_rata_allocate"
+          },
+          "total_amount": {
+            "type": [
+              "integer",
+              "string",
+              "number"
+            ]
+          },
+          "weights": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "value": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "from_unit": {
+            "type": "string"
+          },
+          "to_unit": {
+            "type": "string"
+          },
+          "fee_bps": {
+            "type": [
+              "integer",
+              "number",
+              "string"
+            ]
+          }
+        }
+      },
+      "free_hook": true
+    },
+    {
+      "id": "subset_sum_reconcile",
+      "name": "subset_sum_reconcile",
+      "description": "Deterministic N-to-M subset-sum bank/card/invoice reconciliation solver with fee tolerance, Japanese Qualified Invoice (T+13 digits) validation, and Yayoi/freee/MoneyForward journal export. Free tier up to 25 items; larger batches support HTTP 402 (L402 Lightning / x402 USDC) unlock.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "targets": {
+            "type": "array",
+            "description": "Bank deposits or aggregated credit card withdrawals to reconcile.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "amount"
+              ]
+            }
+          },
+          "candidates": {
+            "type": "array",
+            "description": "Individual invoices, orders, or receipts to match against targets.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "integer"
+                },
+                "invoice_no": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "amount"
+              ]
+            }
+          },
+          "fee_tolerance_jpy": {
+            "type": "integer",
+            "default": 0,
+            "description": "Maximum allowed bank transfer / gateway fee difference."
+          },
+          "journal_format": {
+            "type": "string",
+            "enum": [
+              "freee",
+              "yayoi",
+              "mf",
+              "en"
+            ],
+            "default": "freee"
+          },
+          "payment_proof": {
+            "type": "string",
+            "description": "Optional L402 ('L402 <macaroon>:<preimage>') or x402 ('x402 <cid>:<receipt>') proof for large batches."
+          }
+        },
+        "required": [
+          "targets",
+          "candidates"
+        ]
+      },
+      "free_hook": false
+    },
+    {
+      "id": "stochastic_inventory_cashflow_solve",
+      "name": "stochastic_inventory_cashflow_solve",
+      "description": "Monte Carlo stochastic dynamic programming solver that computes the optimal (s, S) reorder policy, safety stock, yield loss buffer, and 95% CVaR working-capital requirement.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mean_daily_demand": {
+            "type": "number",
+            "default": 40.0
+          },
+          "std_daily_demand": {
+            "type": "number",
+            "default": 12.0
+          },
+          "lead_time_days": {
+            "type": "integer",
+            "default": 7
+          },
+          "unit_cost": {
+            "type": "number",
+            "default": 1000.0
+          },
+          "unit_price": {
+            "type": "number",
+            "default": 1650.0
+          },
+          "holding_cost_per_day": {
+            "type": "number",
+            "default": 8.0
+          },
+          "stockout_penalty": {
+            "type": "number",
+            "default": 450.0
+          },
+          "yield_rate": {
+            "type": "number",
+            "default": 0.96
+          },
+          "horizon_days": {
+            "type": "integer",
+            "default": 60
+          },
+          "num_paths": {
+            "type": "integer",
+            "default": 200
+          },
+          "seed": {
+            "type": "integer",
+            "default": 20261029
+          },
+          "payment_proof": {
+            "type": "string"
+          }
+        }
+      },
+      "free_hook": false
+    },
+    {
+      "id": "audit_smart_contract_invariants",
+      "name": "audit_smart_contract_invariants",
+      "description": "Formal invariant and static vulnerability checker for Solidity/Rust smart contracts covering ERC4626 share inflation, floor/ceil rounding drain, CEI/read-only reentrancy, and oracle/downcast bugs.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "source_code": {
+            "type": "string",
+            "description": "Solidity or Rust smart contract source code."
+          },
+          "contract_name": {
+            "type": "string",
+            "default": "TargetContract.sol"
+          },
+          "deep_audit": {
+            "type": "boolean",
+            "default": false
+          },
+          "payment_proof": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_code"
+        ]
+      },
+      "free_hook": false
+    },
+    {
+      "id": "inspect_csv_integrity",
+      "name": "inspect_csv_integrity",
+      "description": "Deterministic CSV schema, Shift_JIS/UTF-8 garble detection, primary-key uniqueness, and Japanese 8%/10% consumption tax rounding inspector.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "csv_text": {
+            "type": "string",
+            "description": "Raw CSV content to inspect."
+          },
+          "required_columns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "key_column": {
+            "type": "string"
+          },
+          "deep_scan": {
+            "type": "boolean",
+            "default": false
+          },
+          "payment_proof": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "csv_text"
+        ]
+      },
+      "free_hook": false
+    }
+  ]
+}

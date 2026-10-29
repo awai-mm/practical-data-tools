@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "awai-practical-data-tools"
+version = "1.2.0"
+description = "Zero-dependency MCP server and deterministic mathematical solvers for structured data repair, exact crypto/decimal math, subset-sum reconciliation, Monte Carlo inventory optimization, and smart contract formal invariant auditing."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+keywords = ["mcp", "mcp-server", "model-context-protocol", "subset-sum", "monte-carlo", "solidity-audit", "l402", "x402", "a2a", "llms-txt"]
+
+[project.urls]
+Homepage = "https://awai-mm.github.io/practical-data-tools/"
+Repository = "https://github.com/awai-mm/practical-data-tools"
+Documentation = "https://awai-mm.github.io/practical-data-tools/SKILL.md"

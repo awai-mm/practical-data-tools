@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "awai-practical-data-tools": {
+      "command": "python3",
+      "args": [
+        "mcp/mcp_server.py",
+        "--stdio"
+      ],
+      "description": "Deterministic solvers for JSON/CSV repair, exact crypto/decimal math, N-to-M subset-sum journal reconciliation, Monte Carlo (s,S) inventory optimization, and Solidity formal invariant verification."
+    }
+  }
+}
